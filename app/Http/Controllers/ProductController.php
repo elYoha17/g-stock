@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Actions\Product\CreateProduct;
+use App\Actions\Product\UpdateProduct;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\Team;
-use App\UpdateProduct;
 use Illuminate\Http\RedirectResponse;
 
 class ProductController extends Controller
