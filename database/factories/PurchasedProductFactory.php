@@ -21,7 +21,7 @@ class PurchasedProductFactory extends Factory
 
         return [
             'quantity' => $quantity,
-            'cost' => fake()->numberBetween(1, 400) * 50 * $quantity,
+            'total_cost' => fake()->numberBetween(1, 400) * 50 * $quantity,
         ];
     }
 }

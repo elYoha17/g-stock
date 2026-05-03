@@ -10,4 +10,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class PurchasedProduct extends Pivot
 {
     use HasFactory;
+
+    public $timestamps = true;
 }

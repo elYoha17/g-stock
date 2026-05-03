@@ -31,8 +31,11 @@ enum TeamRole: string
                 TeamPermission::CancelInvitation,
                 TeamPermission::CreateProduct,
                 TeamPermission::UpdateProduct,
+                TeamPermission::CreatePurchase,
             ],
-            self::Member => [],
+            self::Member => [
+                TeamPermission::CreatePurchase,
+            ],
         };
     }
 
