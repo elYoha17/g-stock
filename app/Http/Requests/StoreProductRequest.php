@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\Product;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Gate;
 
 class StoreProductRequest extends FormRequest
 {
@@ -13,7 +14,10 @@ class StoreProductRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return $this->user()->can('create', [Product::class]);
+        return Gate::allows('create', [
+            Product::class,
+            $this->route('current_team'),
+        ]);
     }
 
     /**

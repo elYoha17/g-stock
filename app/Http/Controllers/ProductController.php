@@ -12,7 +12,7 @@ use Illuminate\Http\RedirectResponse;
 
 class ProductController extends Controller
 {
-    public function store(StoreProductRequest $request): RedirectResponse
+    public function store(StoreProductRequest $request, Team $currentTeam): RedirectResponse
     {
         $team = $request->user()->currentTeam;
 

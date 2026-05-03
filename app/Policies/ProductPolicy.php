@@ -9,12 +9,8 @@ use App\Models\User;
 
 class ProductPolicy
 {
-    public function create(User $user): bool
+    public function create(User $user, Team $team): bool
     {
-        if (!$team = $user->currentTeam) {
-            return false;
-        }
-
         return $user->hasTeamPermission($team, TeamPermission::CreateProduct);
     }
 
