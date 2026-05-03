@@ -15,4 +15,5 @@ enum TeamPermission: string
     case CancelInvitation = 'invitation:cancel';
 
     case CreateProduct = 'product:create';
+    case UpdateProduct = 'product:update';
 }

@@ -27,4 +27,24 @@ class ProductTest extends TestCase
 
         $this->assertDatabaseHas('products', $playload);
     }
+
+    public function test_user_can_update_product(): void
+    {
+        /** @var User */
+        $user = User::factory()->configure()->create();
+        $product = Product::factory()->create([
+            'team_id' => $user->current_team_id,
+        ]);
+        $playload = Product::factory()->make()->toArray();
+
+        $response = $this->actingAs($user)
+            ->put(route('products.update', [$user->currentTeam, $product]), $playload);
+
+        $response->assertRedirect();
+
+        $this->assertDatabaseHas('products', [
+            ...$playload,
+            'id' => $product->id,
+        ]);
+    }
 }
