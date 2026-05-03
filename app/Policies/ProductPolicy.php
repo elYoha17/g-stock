@@ -22,4 +22,13 @@ class ProductPolicy
 
         return $user->hasTeamPermission($team, TeamPermission::UpdateProduct);
     }
+
+    public function delete(User $user, Product $product, Team $team): bool
+    {
+        if ($team->id !== $product->team_id) {
+            return false;
+        }
+
+        return $user->hasTeamPermission($team, TeamPermission::DeleteProduct);
+    }
 }

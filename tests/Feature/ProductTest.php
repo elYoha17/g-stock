@@ -47,4 +47,22 @@ class ProductTest extends TestCase
             'id' => $product->id,
         ]);
     }
+
+    public function test_user_can_delete_product(): void
+    {
+        /** @var User */
+        $user = User::factory()->configure()->create();
+        $product = Product::factory()->create([
+            'team_id' => $user->current_team_id,
+        ]);
+
+        $response = $this->actingAs($user)
+            ->delete(route('products.destroy', [$user->currentTeam, $product]));
+
+        $response->assertRedirect();
+
+        $this->assertDatabaseMissing('products', [
+            'id' => $product->id,
+        ]);
+    }
 }
