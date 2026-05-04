@@ -35,6 +35,7 @@ enum TeamRole: string
             ],
             self::Member => [
                 TeamPermission::CreatePurchase,
+                TeamPermission::DeletePurchase,
             ],
         };
     }
