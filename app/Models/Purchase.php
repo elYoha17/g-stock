@@ -14,6 +14,6 @@ class Purchase extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'purchased_product')->using(PurchasedProduct::class)->withPivot(['quantity', 'total_cost'])->withTimestamps();
+        return $this->belongsToMany(Product::class, 'purchased_product')->using(PurchasedProduct::class)->withPivot(['quantity', 'total_cost']);
     }
 }

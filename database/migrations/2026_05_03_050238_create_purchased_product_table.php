@@ -14,14 +14,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('purchased_product', function (Blueprint $table) {
-            $table->id();
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Purchase::class)->constrained()->cascadeOnDelete();
             $table->unsignedInteger('quantity');
             $table->decimal('total_cost', 15, 0);
-            $table->timestamps();
 
-            $table->unique(['purchase_id', 'product_id']);
+            $table->primary(['purchase_id', 'product_id']);
         });
     }
 
