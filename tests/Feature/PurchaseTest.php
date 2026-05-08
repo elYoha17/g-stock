@@ -49,6 +49,54 @@ class PurchaseTest extends TestCase
         $this->assertDatabaseCount('purchased_product', $count);
     }
 
+    public function test_user_can_update_purchase(): void
+    {
+        $count = 3;
+        /** @var User */
+        $user = User::factory()->configure()->create();
+        $products = Product::factory()->count($count)->create([
+            'team_id' => $user->current_team_id,
+        ]);
+        $purchase = Purchase::factory()->create([
+            'team_id' => $user->current_team_id,
+        ]);
+
+        foreach ($products as $product) {
+            PurchasedProduct::factory()->create([
+                'product_id' => $product->id,
+                'purchase_id' => $purchase->id,
+            ]);
+        }
+
+        $purchasePayload = Purchase::factory()->make()->toArray();
+        $purchasedProductPayload = [];
+        $purchasedProductPayload[] = PurchasedProduct::factory()->make([
+                'product_id' => $products->first()?->id,
+            ])->toArray();
+        $product = Product::factory()->create([
+            'team_id' => $user->current_team_id,
+        ]);
+        $purchasedProductPayload[] = PurchasedProduct::factory()->make([
+                'product_id' => $product->id,
+            ])->toArray();
+
+        $payload = [
+            'purchase' => $purchasePayload,
+            'products' => $purchasedProductPayload,
+        ];
+
+        $response = $this->actingAs($user)
+            ->put(route('purchases.update', $purchase), $payload);
+
+        $response->assertRedirect();
+
+        $this->assertDatabaseHas('purchases', [
+            'date' => $payload['purchase']['date'],
+        ]);
+
+        $this->assertDatabaseCount('purchased_product', 2);
+    }
+
     public function test_user_can_delete_purchase(): void
     {
         $count = 3;

@@ -19,5 +19,6 @@ enum TeamPermission: string
     case DeleteProduct = 'product:delete';
 
     case CreatePurchase = 'purchase:create';
+    case UpdatePurchase = 'purchase:update';
     case DeletePurchase = 'purchase:delete';
 }

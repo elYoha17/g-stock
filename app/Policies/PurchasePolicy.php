@@ -14,6 +14,15 @@ class PurchasePolicy
         return $user->hasTeamPermission($team, TeamPermission::CreatePurchase);
     }
 
+    public function update(User $user, Purchase $purchase, Team $team): bool
+    {
+        if ($team->id !== $purchase->team_id) {
+            return false;
+        }
+
+        return $user->hasTeamPermission($team, TeamPermission::UpdateProduct);
+    }
+
     public function delete(User $user, Purchase $purchase, Team $team): bool
     {
         if ($team->id !== $purchase->team_id) {
