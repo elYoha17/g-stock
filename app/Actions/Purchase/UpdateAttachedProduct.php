@@ -7,9 +7,10 @@ use App\Models\Purchase;
 
 class UpdateAttachedProduct
 {
-    public function __invoke(Purchase $purchase, array $productsData): void
+    public function __invoke(Purchase $purchase, array $productsData): array
     {
         $data = app(MakeAttachableArray::class)($productsData, 'product_id');
-        $purchase->products()->sync($data);
+        
+        return $purchase->products()->sync($data);
     }
 }

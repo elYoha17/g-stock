@@ -11,7 +11,11 @@ class UpdatePurchase
     {
         return DB::transaction(function () use ($purchase, $data) {
             $purchase->update($data['purchase']);
-            app(UpdateAttachedProduct::class)($purchase, $data['products']);
+            $result = app(UpdateAttachedProduct::class)($purchase, $data['products']);
+
+            if (collect($result)->flatten()->isNotEmpty()) {
+                $purchase->touch();
+            }
             
             return $purchase;
         });
