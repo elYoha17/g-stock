@@ -29,9 +29,10 @@ class StorePurchaseRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'date' => ['required', 'date'],
-            'products' => ['required', 'array', 'min:1'],
+            'purchase' => ['required', 'array'],
+            'purchase.date' => ['required', 'date'],
 
+            'products' => ['required', 'array', 'min:1'],
             'products.*.product_id' => ['required', Rule::exists('products', 'id')->where('team_id', $this->route('current_team')->id)],
             'products.*.quantity' => ['required', 'integer', 'min:1'],
             'products.*.total_cost' => ['required', 'numeric', 'min:0'],

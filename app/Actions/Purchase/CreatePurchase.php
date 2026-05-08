@@ -9,17 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class CreatePurchase
 {
-    public function __invoke(Team $team, array $data, array $productData): Purchase
+    public function __invoke(Team $team, array $data): Purchase
     {
-        return DB::transaction(function () use ($team, $data, $productData) {
-            $purchase = $team->purchases()->create($data);
-            $purchase->products()->attach(
-                collect($productData)->mapWithKeys(function ($item) {
-                    return [
-                        $item['product_id'] => Arr::except($item, ['product_id'])
-                    ];
-                })->toArray()
-            );
+        return DB::transaction(function () use ($team, $data) {
+            $purchase = $team->purchases()->create($data['purchase']);
+            app(AttachProduct::class)($purchase, $data['products']);
+            
             return $purchase;
         });
     }

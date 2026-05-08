@@ -33,7 +33,7 @@ class PurchaseTest extends TestCase
         }
 
         $payload = [
-            ...$purchasePayload,
+            'purchase' => $purchasePayload,
             'products' => $purchasedProductPayload,
         ];
 
@@ -43,7 +43,7 @@ class PurchaseTest extends TestCase
         $response->assertRedirect();
 
         $this->assertDatabaseHas('purchases', [
-            'date' => $payload['date'],
+            'date' => $payload['purchase']['date'],
         ]);
 
         $this->assertDatabaseCount('purchased_product', $count);

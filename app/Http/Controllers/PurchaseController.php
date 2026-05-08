@@ -17,7 +17,7 @@ class PurchaseController extends Controller
 
     public function store(StorePurchaseRequest $request, Team $currentTeam): RedirectResponse
     {
-        app(CreatePurchase::class)($currentTeam, $request->only('date'), $request->input('products'));
+        app(CreatePurchase::class)($currentTeam, $request->validated());
 
         return back();
     }
