@@ -9,11 +9,13 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
 use App\Models\Team;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Gate;
 
 class ProductController extends Controller
 {
+    use AuthorizesRequests;
+
     public function store(StoreProductRequest $request, Team $currentTeam): RedirectResponse
     {
         app(CreateProduct::class)($currentTeam, $request->validated());
@@ -30,7 +32,7 @@ class ProductController extends Controller
 
     public function destroy(Team $currentTeam, Product $product):RedirectResponse
     {
-        Gate::authorize('delete', [$product, $currentTeam]);
+       $this->authorize('delete', [$product, $currentTeam]);
 
         app(DeleteProduct::class)($product);
 
