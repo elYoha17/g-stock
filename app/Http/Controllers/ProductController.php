@@ -16,9 +16,7 @@ class ProductController extends Controller
 {
     public function store(StoreProductRequest $request, Team $currentTeam): RedirectResponse
     {
-        $team = $request->user()->currentTeam;
-
-        app(CreateProduct::class)($team, $request->validated());
+        app(CreateProduct::class)($currentTeam, $request->validated());
 
         return back();
     }
