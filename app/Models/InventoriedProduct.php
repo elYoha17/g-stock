@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class InventoriedProduct extends Pivot
 {
     use HasFactory;
+
+    public $timestamps = false;
 }

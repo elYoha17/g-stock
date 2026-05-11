@@ -45,6 +45,43 @@ class InventoryTest extends TestCase
 
         $this->assertDatabaseCount('inventoried_product', 4);
     }
+
+    public function test_user_can_update_inventory(): void
+    {
+        /** @var User */
+        $user = User::factory()->configure()->create();
+        $products = $this->createProducts($user->current_team_id, 8);
+
+        $inventory = Inventory::factory()->create([
+            'team_id' => $user->current_team_id,
+        ]);
+
+        $products->shuffle()->take(4)->map(fn ($product) => InventoriedProduct::factory()->create([
+            'product_id' => $product->id,
+            'inventory_id' => $inventory->id,
+        ]));
+
+        $usedProducts = $products->shuffle()->take(5);
+        $inventoriedProducts = $usedProducts->map(fn ($product) => InventoriedProduct::factory()->make([
+            'product_id' => $product->id,
+        ]));
+
+        $payload = [
+            'inventory' => $inventory->toArray(),
+            'products' => $inventoriedProducts->toArray(),
+        ];
+
+        $response = $this->actingAs($user)
+            ->put(route('inventories.update', $inventory), $payload);
+
+        $response->assertRedirect();
+
+        $this->assertDatabaseHas('inventories', [
+            'date' => $payload['inventory']['date'],
+        ]);
+
+        $this->assertDatabaseCount('inventoried_product', 5);
+    }
     
     private function createProducts(Team|int $team, int $count): Collection
     {

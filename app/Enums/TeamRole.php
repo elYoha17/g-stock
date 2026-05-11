@@ -34,6 +34,7 @@ enum TeamRole: string
                 TeamPermission::CreatePurchase,
                 TeamPermission::UpdatePurchase,
                 TeamPermission::CreateInventory,
+                TeamPermission::UpdateInventory,
             ],
             self::Member => [
                 TeamPermission::CreatePurchase,

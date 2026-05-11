@@ -18,7 +18,7 @@ Route::prefix('{current_team}')
         Route::inertia('dashboard', 'dashboard')->name('dashboard');
         Route::resource('products', ProductController::class)->only(['store', 'update', 'destroy']);
         Route::resource('purchases', PurchaseController::class)->only(['store', 'update', 'destroy']);
-        Route::resource('inventories', InventoryController::class)->only(['store']);
+        Route::resource('inventories', InventoryController::class)->only(['store', 'update']);
     });
 
 Route::middleware(['auth'])->group(function () {
