@@ -19,14 +19,20 @@ class InventoryController extends Controller
 
     public function store(StoreInventoryRequest $request, Team $currentTeam)
     {
-        app(CreateInventory::class)($currentTeam, $request->validated());
+        $inventoryData = $request->validated('inventory');
+        $productsData = $request->validated('products');
+
+        app(CreateInventory::class)($currentTeam, $inventoryData, $productsData);
 
         return back();
     }
 
     public function update(UpdateInventoryRequest $request, Team $currentTeam, Inventory $inventory): RedirectResponse
     {
-        app(UpdateInventory::class)($inventory, $request->validated());
+        $inventoryData = $request->validated('inventory');
+        $productsData = $request->validated('products');
+
+        app(UpdateInventory::class)($inventory, $inventoryData, $productsData);
 
         return back();
     }

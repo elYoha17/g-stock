@@ -8,6 +8,6 @@ class DeleteInventory
 {
     public function __invoke(Inventory $inventory): bool
     {
-        return $inventory->delete();
+        return (bool) $inventory->delete();
     }
 }

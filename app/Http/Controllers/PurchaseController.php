@@ -19,14 +19,20 @@ class PurchaseController extends Controller
 
     public function store(StorePurchaseRequest $request, Team $currentTeam): RedirectResponse
     {
-        app(CreatePurchase::class)($currentTeam, $request->validated());
+        $purchaseData = $request->validated('purchase');
+        $productsData = $request->validated('products');
+
+        app(CreatePurchase::class)($currentTeam, $purchaseData, $productsData);
 
         return back();
     }
 
     public function update(UpdatePurchaseRequest $request, Team $currentTeam, Purchase $purchase): RedirectResponse
     {
-        app(UpdatePurchase::class)($purchase, $request->validated());
+        $purchaseData = $request->validated('purchase');
+        $productsData = $request->validated('products');
+
+        app(UpdatePurchase::class)($purchase, $purchaseData, $productsData);
 
         return back();
     }
