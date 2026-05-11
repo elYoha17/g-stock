@@ -82,6 +82,33 @@ class InventoryTest extends TestCase
 
         $this->assertDatabaseCount('inventoried_product', 5);
     }
+
+    public function test_user_can_delete_inventory(): void
+    {
+        /** @var User */
+        $user = User::factory()->configure()->create();
+        $products = $this->createProducts($user->current_team_id, 8);
+
+        $inventory = Inventory::factory()->create([
+            'team_id' => $user->current_team_id,
+        ]);
+
+        $products->shuffle()->take(4)->map(fn ($product) => InventoriedProduct::factory()->create([
+            'product_id' => $product->id,
+            'inventory_id' => $inventory->id,
+        ]));
+
+        $response = $this->actingAs($user)
+            ->delete(route('inventories.destroy', $inventory));
+
+        $response->assertRedirect();
+
+        $this->assertDatabaseMissing('inventories', [
+            'id' => $inventory->id,
+        ]);
+
+        $this->assertDatabaseCount('inventoried_product', 0);
+    }
     
     private function createProducts(Team|int $team, int $count): Collection
     {

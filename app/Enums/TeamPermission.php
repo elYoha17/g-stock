@@ -24,4 +24,5 @@ enum TeamPermission: string
 
     case CreateInventory = 'inventory:create';
     case UpdateInventory = 'inventory:update';
+    case DeleteInventory = 'inventory:delete';
 }

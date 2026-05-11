@@ -30,4 +30,17 @@ class InventoryPolicy
 
         return $user->hasTeamPermission($team, TeamPermission::UpdateInventory);
     }
+
+    public function delete(User $user, Inventory $inventory, Team $team): bool
+    {
+        if ($user->current_team_id !== $team->id) {
+            return false;
+        }
+
+        if ($team->id !== $inventory->team_id) {
+            return false;
+        }
+
+        return $user->hasTeamPermission($team, TeamPermission::DeleteInventory);
+    }
 }
