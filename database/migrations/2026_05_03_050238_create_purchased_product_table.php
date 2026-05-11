@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignIdFor(Product::class)->constrained()->cascadeOnDelete();
             $table->foreignIdFor(Purchase::class)->constrained()->cascadeOnDelete();
             $table->unsignedInteger('quantity');
-            $table->decimal('total_cost', 15, 0);
+            $table->decimal('cost', 15, 0);
 
             $table->primary(['purchase_id', 'product_id']);
         });

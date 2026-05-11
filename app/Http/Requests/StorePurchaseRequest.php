@@ -35,7 +35,7 @@ class StorePurchaseRequest extends FormRequest
             'products' => ['required', 'array', 'min:1'],
             'products.*.product_id' => ['required', Rule::exists('products', 'id')->where('team_id', $this->route('current_team')->id)],
             'products.*.quantity' => ['required', 'integer', 'min:1'],
-            'products.*.total_cost' => ['required', 'numeric', 'min:0'],
+            'products.*.cost' => ['required', 'numeric', 'min:0'],
         ];
     }
 }

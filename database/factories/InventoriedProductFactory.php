@@ -24,8 +24,8 @@ class InventoriedProductFactory extends Factory
 
         return [
             'quantity' => $quantity,
-            'total_cost' => $total_cost,
-            'total_price' => $total_price,
+            'cost' => $total_cost,
+            'price' => $total_price,
         ];
     }
 }

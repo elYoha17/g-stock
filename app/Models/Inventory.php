@@ -14,6 +14,6 @@ class Inventory extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'inventoried_product')->using(InventoriedProduct::class)->withPivot(['quantity', 'total_cost', 'total_price']);
+        return $this->belongsToMany(Product::class, 'inventoried_product')->using(InventoriedProduct::class)->withPivot(['quantity', 'cost', 'price']);
     }
 }
